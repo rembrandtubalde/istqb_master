@@ -28,3 +28,4 @@
 14. generate tests for static_pages
 		rails generate integration_test static_pages
 		
+15. automate unit tests with spork+guard
