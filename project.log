@@ -25,3 +25,6 @@
 13. generate static_pages controller
 		rails generate controller StaticPages home about --no-test-framework
 		
+14. generate tests for static_pages
+		rails generate integration_test static_pages
+		
