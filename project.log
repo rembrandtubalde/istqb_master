@@ -1,0 +1,27 @@
+1. setup rvm
+2. setup ruby 2.0.0
+3. create rails gemset
+4. install rails gem
+5. install git
+6. install heroku toolbelt
+7. generate new project
+	bundle install
+	add PATH to ~/.profile
+	source ~/.profile to ~/.bash_profile
+8. git init
+9. add .secret and other hidden files to .gitignore
+10. heroku create
+11. update secret_token.rb with code generating token
+13. install node.js:
+		
+		sudo apt-get install python-software-properties python g++ make
+		sudo add-apt-repository ppa:chris-lea/node.js
+		sudo apt-get update
+		sudo apt-get install nodejs
+
+12. create rspec tests:
+	rails generate rspec:install
+
+13. generate static_pages controller
+		rails generate controller StaticPages home about --no-test-framework
+		
