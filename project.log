@@ -29,3 +29,47 @@
 		rails generate integration_test static_pages
 		
 15. automate unit tests with spork+guard
+
+16. configured postgresql
+
+17. added layout
+	added elements
+	added bootstrap-sass gem to gemfile
+	updated /config/application.rb 
+	
+			module SampleApp
+			  class Application < Rails::Application
+				.
+				.
+				.
+				config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif)
+			  end
+			end
+			
+	create app/assets/stylesheets/custom.css.scss:
+			@import "bootstrap";
+	move shim, header and footer to partials
+	add real nav  links to footer
+
+18. add link synonims and routes
+		config/routes.rb
+		SampleApp::Application.routes.draw do
+		  match '/help',    to: 'static_pages#help',    via: 'get'
+		  match '/about',   to: 'static_pages#about',   via: 'get'
+		  match '/contact', to: 'static_pages#contact', via: 'get'
+		  .
+		  .
+		  .
+		end
+
+19. generate Users controller:
+		rails generate controller Users new --no-test-framework
+		
+	and tests for it:
+		rails generate integration_test user_pages
+		
+20. add route to routes.rb:
+
+		match '/signup', to: 'user_pages#new', via:get
+		
+

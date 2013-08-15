@@ -1,5 +1,8 @@
-<% provide(:title, 'Home') %>
+<div class="center hero-unit">
+	<% provide(:title, 'Home') %>
 
-<h1>ISTQB Master</h1>
-<p>Please login or create new account to start getting ready for your ISTQB CT FL certification</p>
+	<h1>ISTQB Master</h1>
+	<p>Please login or create new account to start getting ready for your <%= link_to "ISTQB CT FL certification", "http://www.istqb.org/certification-path-root/foundation-level/foundation-level-in-a-nutshell.html" %></p>
 
+	<%= link_to "Sign up now!", signup_path, class: "btn btn-large btn-primary" %>
+</div>
