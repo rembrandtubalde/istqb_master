@@ -72,4 +72,37 @@
 
 		match '/signup', to: 'user_pages#new', via:get
 		
+21. create users model
 
+		rails generate model User name:string email:string
+		rake db:migrate
+		
+		add restrictions to the user.rb:
+			class User < ActiveRecord::Base
+			  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+			  
+			  before_save do 
+				self.email = email.downcase 
+			  end
+			  
+			  validates :name, presence:true, length: { maximum: 50 }
+			  validates :email, presence:true, format: { with: VALID_EMAIL_REGEX },                  uniqueness: { case_sensitive: false }
+			  
+				
+			  has_secure_password
+			  validates :password, presence:true, length: { minimum: 6 }
+			  
+
+			end
+
+22. add resources :users to the routes.rb to enable REST for users
+
+23. create app/views/users/show.html.erb:
+
+		<%= @user.name %>, <%= @user.email %>
+		
+24. define show action in users controller:
+
+		  def show
+			@user = User.find(params[:id])
+		  end
