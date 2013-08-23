@@ -6,6 +6,7 @@ IstqbMaster::Application.routes.draw do
   match '/signin',	to: 'sessions#new',			via: 'get'
   match '/signout', to: 'sessions#destroy',     via: 'delete'
   match '/about',   to: 'static_pages#about',   via: 'get'
+  match '/users',	to: 'users#index',			via: 'get'
   
   
   

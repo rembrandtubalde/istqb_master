@@ -47,6 +47,18 @@ describe User do
     should be_valid
   end
   
+  it "should not be super user by default" do
+    should_not be_is_superuser
+  end
+  
+  describe "with SU attribute set to 'true'" do
+    before do
+      @user.save!
+      @user.toggle!(:is_superuser)
+    end
+
+    it { should be_is_superuser }
+  end
   
   # value validations 
   describe "when name is empty" do
