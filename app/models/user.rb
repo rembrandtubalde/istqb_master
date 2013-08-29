@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   
+  has_many :attempts, dependent: :destroy
+  
   before_save do 
 	self.email = email.downcase 
   end

@@ -13,4 +13,21 @@
 		</h2>
     </section>
   </aside>
+  <div class="span8">
+    <% if @user.attempts.any? %>
+      <h3>
+		<div>Just look at those marvelous results<%= " of yours" if @user == current_user %>!</div> 
+	  </h3>
+	  <div class="sub_header"><%= @user.attempts.count %> test(s) taken: <%= passed_tests(@user, true) %> passed, <%= passed_tests(@user, false) %> failed</div>
+      <table>
+        <tr>
+		  <th width="110px"><div style="border: border-left: 1px">Question ID</div></th>
+		  <th>Time taken</th>
+		</tr>
+        <%= render @attempts %>
+      </table>
+      <%= will_paginate @attempts %>
+    <% end %>
+
+  </div>
 </div>

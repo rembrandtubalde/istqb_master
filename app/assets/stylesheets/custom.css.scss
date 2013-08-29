@@ -9,6 +9,8 @@ $grayMediumLight: #eaeaea;
   box-sizing: border-box;
 }
 
+
+
 /* universal */
 
 html {
@@ -202,4 +204,42 @@ input, select {
       border-bottom: 1px solid $grayLighter;
     }
   }
+}
+
+/* questions styling */
+
+.question_card {
+   position:relative;
+   border: 1px solid #bbb;
+   border-radius: 5px;
+   background-color: #f7f7f7;
+   width: auto;
+   padding: 15px 10px 20px 30px; 
+}
+
+.answer_options {
+   margin-top: 20px;
+   padding-bottom: 10px;
+}
+
+input[type='radio']{
+
+  vertical-align: top;
+  padding-bottom: 10px;
+}
+
+.btn-medium {
+  margin: 10px 0 0 0;
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+}
+
+/* users show page*/
+
+.sub_header {
+  font-size: 20px;
+  color: #999 ;
+  margin-bottom: 30px;
+  
 }

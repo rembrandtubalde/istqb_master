@@ -11,7 +11,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130819122908) do
+ActiveRecord::Schema.define(version: 20130825100517) do
+
+  create_table "attempts", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "question_id"
+    t.integer  "answer"
+    t.integer  "correct_answer"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "attempts", ["user_id", "created_at"], name: "index_attempts_on_user_id_and_created_at", using: :btree
+
+  create_table "questions", force: true do |t|
+    t.text     "question"
+    t.text     "option_one"
+    t.text     "option_two"
+    t.text     "option_three"
+    t.text     "option_four"
+    t.integer  "correct_answer"
+    t.string   "certificate_type", default: "CTFL"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "questions", ["id"], name: "index_questions_on_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "name"

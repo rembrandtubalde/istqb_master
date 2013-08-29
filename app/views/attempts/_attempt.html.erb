@@ -1,0 +1,8 @@
+<tr>
+  <% if attempt.answer == attempt.correct_answer %>
+    <td align="right" style="padding-right: 15px" bgcolor="#ccff99"><%= link_to(attempt.question_id, '#') %> </td>
+  <% else %>
+    <td align="right" style="padding-right: 15px" bgcolor="#ff9999"><%= link_to(attempt.question_id, '#') %> </td>
+  <% end %>
+  <td align="left" style="padding-left: 15px"><%= time_ago_in_words(attempt.created_at) %> ago</td>
+</tr>

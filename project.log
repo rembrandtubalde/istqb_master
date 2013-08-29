@@ -106,3 +106,273 @@
 		  def show
 			@user = User.find(params[:id])
 		  end
+		  
+__________________________
+
+modelling questions and attempts
+
+# generate models for questions and attempts
+
+rails generate model Question question:text 1:text 2:text 3:text 4:text correct_answer:integer certificate_type:string
+
+rails generate model Attempt user_id:integer question_id:integer answer:integer correct_answer:integer
+
+# make sure migrations have indicies etc. and run them. add default value to certificate_type!
+
+# update model files with validations, associations and dependencies:
+
+app/models/questions.rb
+class Questions << ActiveRecord::Base
+  has_many :attempts, dependent: :destroy
+  validates :question, presence:true
+  validates :1, presence:true
+  validates :2, presence:true
+  validates :correct_answer, presence:true, :inclusion => { :in => [1,2,3,4] }
+end
+
+
+app/models/attempts.rb
+class Attempts << ActiveRecord::Base
+  belongs_to :user
+  belongs_to :question
+  default_scope -> { order('created-at DESC') }
+  validates :user_id, presence:true
+  validates :question_id, presence:true
+  validates :answer, presence:true, :inclusion => { :in => [1,2,3,4] }
+  validates :correct_answer, presence:true
+end
+
+app/models/users.rb
+  has_many :attempts, dependent: :destroy
+  .
+  .
+  .
+end
+
+# add history to the user show page 
+
+<% provide(:title, @user.name) %>
+<div class="row">
+  .
+  .
+  .
+  <aside>
+    .
+    .
+    .
+  </aside>
+  <div class="span8">
+    <% if @user.attempts.any? %>
+      <h3>Just look at those marvelous results of yours (<%= @user.attempts.count %> tests taken so far)!</h3>
+      <table>
+        <tr>
+		  <th>Question #</th>
+		  <th>Your answer</th>
+		  <th>Time taken</th>
+		</tr>
+        <%= render @attempts %>
+      </table>
+      <%= will_paginate @attempts %>
+    <% end %>
+  </div>
+</div>
+
+## define the _attempt.html.erb
+
+
+<tr>
+  <td><%= link_to(attempt.question_id, #) %></td>
+  <td  <% if attempt.answer == attempt.correct_answer %>
+         <%= 'class="hist_correct"' %>
+       <% else %>
+         <%= 'class="hist_wrong"' %>
+       <% end %> > <%= attempt.answer %> </td>
+  <td><%= time_ago_in_words(attempt.created_at) %></td>
+</tr>
+
+
+# define @attempts in users_controller.rb
+
+.
+.
+.
+def show
+  @user = User.find(params[:id])
+  @attempts = @user.attempts.paginate(page: params[:page], :per_page => 50)
+end
+
+
+###########################################
+
+
+# add attempts resource to the routes.rb
+
+resources :attempts, only: [:create]
+
+# move signed_in_user method from Users controller to the sessions_helper.rb
+
+app/helpers/sessions_helper.rb
+module SessionsHelper
+  .
+  .
+  .
+  def current_user?(user)
+    user == current_user
+  end
+
+  def signed_in_user
+    unless signed_in?
+      store_location
+      redirect_to signin_url, notice: "Please sign in."
+    end
+  end
+  .
+  .
+  .
+end
+
+# add create action to AttemptsController
+
+app/controllers/attempts_controller.rb
+class AttemptsController < ApplicationController
+  before_action :signed_in_user
+
+  def load_question
+    @current_question = Question.find_by_id(1 + rand(Question.count))
+  end
+
+  def create
+    @attempt = current_user.attempts.build(attempt_params)
+    @attempt.question_id = @current_question.id
+    @attempt.correct_answer = @current_question.correct_answer
+    if @attempt.save
+      if @attempt.answer == @attempt.correct_answer
+        flash[:success] = "Boom! Headshot!"
+      else
+        flash[:error] = "That was a close one... The correct one was #{@attempt.correct_answer}"
+      end
+      redirect_to root_url
+    else
+      render 'static_pages/home'
+    end
+  end
+  
+  private
+
+    def attempt_params
+      params.require(:attempt).permit(:answer,:question_id,:correct_answer)
+    end
+end
+
+# adjust homepage to display questions
+
+<% if signed_in? %>
+  <div class="row">
+    <aside class="span4">
+      <section>
+        <%= render 'shared/user_info' %>
+      </section>
+      <section>
+        <%= render 'shared/attempt_form' %>
+      </section>
+    </aside>
+  </div>
+<% else %>
+<div class="center hero-unit">
+	<% provide(:title, 'Home') %>
+
+	<h1>ISTQB Master</h1>
+	<p>Please login or create new account to start getting ready for your <%= link_to "ISTQB CT FL certification", "http://www.istqb.org/certification-path-root/foundation-level/foundation-level-in-a-nutshell.html" %></p>
+
+	<%= link_to "Sign up now!", signup_path, class: "btn btn-large btn-primary" %>
+</div>
+<% end %>
+
+
+# add _user_info and _attempt_form partials
+
+app/views/shared/_user_info.html.erb
+<%= link_to gravatar_for(current_user), current_user %>
+<h1>
+  <%= current_user.name %>
+</h1>
+<span>
+  <%= link_to "view my profile", current_user %>
+</span>
+<span>
+  <%= pluralize(current_user.attempts.count, "tests taken") %>
+</span>
+
+app/views/shared/_micropost_form.html.erb
+<%= form_for(@attempt) do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+  <div class="field">
+    <%= f.text_area :answer, placeholder: "Your answer here" %>
+  </div>
+  <%= f.submit "Next", class: "btn btn-large btn-primary" %>
+<% end %>
+
+# define @attempt in static pages controller
+
+app/controllers/static_pages_controller.rb
+class StaticPagesController < ApplicationController
+
+  def home
+    @attempt = current_user.attempts.build if signed_in?
+  end
+  .
+  .
+  .
+end
+
+
+# edit shared error messages partial
+
+app/views/shared/_error_messages.html.erb
+<% if object.errors.any? %>
+  <div id="error_explanation">
+    <div class="alert alert-error">
+      The form contains <%= pluralize(object.errors.count, "error") %>.
+    </div>
+    <ul>
+    <% object.errors.full_messages.each do |msg| %>
+      <li>* <%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+# fix user/new and user/edit pages
+
+app/views/users/new.html.erb
+<% provide(:title, 'Sign up') %>
+<h1>Sign up</h1>
+
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for(@user) do |f| %>
+      <%= render 'shared/error_messages', object: f.object %>
+      .
+      .
+      .
+    <% end %>
+  </div>
+</div>
+
+app/views/users/edit.html.erb
+<% provide(:title, "Edit user") %>
+<h1>Update your profile</h1>
+
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for(@user) do |f| %>
+      <%= render 'shared/error_messages', object: f.object %>
+      .
+      .
+      .
+    <% end %>
+
+    <%= gravatar_for(@user) %>
+    <a href="http://gravatar.com/emails">change</a>
+  </div>
+</div>

@@ -1,0 +1,48 @@
+
+<% @current_question = load_question%>
+<div class="question_card">
+<h3>Question <%=current_question.id %> / <%= Question.count %> </h3>
+<div class="question"><%= current_question.question %></div>
+
+<div class="answer_options">
+<%= form_for(@attempt) do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+    
+    <div class="answer_option">
+		<span style="vertical-align: middle" >	
+		<%= f.radio_button :answer, '1', onclick: "enableSubmit()" %>
+		<%= f.label :answer, "1) #{current_question.option_one}", value: '1', style: "display:inline" %>
+		</span>
+    </div>
+
+    <div class="answer_option">
+		<span style="vertical-align: middle" >	
+		<%= f.radio_button :answer, '2', onclick: "enableSubmit()" %>
+		<%= f.label :answer, "2) #{current_question.option_two}", value: '2', style: "display:inline" %>
+		</span>
+    </div>
+    
+    <% if !current_question.option_three.nil? %>
+        <div class="answer_option">
+			<span style="vertical-align: middle" >	
+			<%= f.radio_button :answer, '3', onclick: "enableSubmit()" %>
+			<%= f.label :answer, "3) #{current_question.option_three}", value: '3', style: "display:inline" %>
+			</span>
+		</div>
+    <% end %>
+    
+    <% if !current_question.option_four.nil? %>
+        <div class="answer_option">
+			<span style="vertical-align: middle" >	
+			<%= f.radio_button :answer, '4', onclick: "enableSubmit()" %>
+			<%= f.label :answer, "4) #{current_question.option_four}", value: '4', style: "display:inline" %>
+			</span>
+		</div>
+    <% end %>
+
+  <%= f.submit "Submit answer >>>", class: "btn btn-medium btn-primary", id: "submit_button", disabled: true %>
+
+<% end %>
+</div>
+</div>
+

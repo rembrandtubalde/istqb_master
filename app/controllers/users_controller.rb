@@ -19,6 +19,7 @@ class UsersController < ApplicationController
 	  
 	def show
 	  @user = User.find(params[:id])
+	  @attempts = @user.attempts.paginate(page: params[:page], :per_page => 25)
 	end
 	  
 	def edit
@@ -44,6 +45,8 @@ class UsersController < ApplicationController
 		  render 'new'
 		end
 	  end
+	  
+
 
 	  private
 
@@ -52,14 +55,7 @@ class UsersController < ApplicationController
 									   :password_confirmation,
 									   :certificate_type)
 		end
-		
-		def signed_in_user
-		  unless signed_in?
-			store_location
-			redirect_to signin_url, notice: "Please sign in."
-		  end	
-		end
-		
+			
 		def correct_user
 		  @user = User.find(params[:id])
 		  redirect_to(root_url) unless current_user?(@user)
