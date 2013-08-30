@@ -1,0 +1,42 @@
+<h3>Greetings, <%= current_user.name%>!</h3>
+
+<p>So you came here to make this site a better place by extending its questions library... But keep in mind that being a Superuser is a great burden. With great power comes great responsibility, as they say...</p>
+
+<p>The meaning of the bombastic phrase above is: <strong>There is no pre-import validation of the datafile you upload.</strong> Well, yet... If format is bad, it can throw nasty errors or just do nothing to the DB. So please keep in mind the following easy rules while preparing the .csv file for upload:</p>
+<ul>
+	<li><strong>It should be a .csv</strong>. Not .xls. Not .xlsx. Not .ods. Not .xls renamed into .csv.</li>
+	<li>It should have ';' set as delimiter and '"' set as text wrapper</li>
+	<li>
+		The format of input should be exactly as shown below:
+		<table border=1>
+			<tr align="left">
+				<th>id</th>
+				<th>question</th>
+				<th>option_one</th>
+				<th>option_two</th>
+				<th>option_three</th>
+				<th>option_four</th>
+				<th>correct_answer</th>
+				<th>certificate_type</th>
+			</tr>
+			<tr align="left" valign="top">
+				<td>This field is optional. If it's empty - new record will be created in the DB. If it contains the ID of an existing question - this question will be updated.</td>
+				<td>The text of the question. Simple enough.</td>
+				<td>The first answer option. It is a mandatory field. Note: please do not add numbers or a./b./c. numbering in front of the option text. The question view will hanle it.</td>
+				<td>The second answer option. It is a mandatory field as well.</td>
+				<td>The third answer option. This one can be left blank</td>
+				<td>The fourth answer option. You can keep it empty as well.</td>
+				<td>An <strong>INTEGER</strong> between 1 and 4. Do not put text here. It should be a number of correct answer option.</td>
+				<td>Put 'CTFL' here or leave it blank. Whatever, man.</td>
+			</tr>
+		</table>
+	</li>
+	<li>Should you be unsure or should the application reject your input file, please feel free to use this template instead: <%= link_to image_tag('csv.png', size: "32"), download_path %></li>
+
+</ul>
+
+
+<%= form_tag load_csv_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Import" %>
+<% end %>

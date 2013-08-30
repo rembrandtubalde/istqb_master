@@ -2,12 +2,17 @@ IstqbMaster::Application.routes.draw do
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
   resources :attempts, only: [:create]
+  resources :questions
+  
   root  'static_pages#home'
   match '/signup',  to: 'users#new',            via: 'get'
   match '/signin',	to: 'sessions#new',			via: 'get'
   match '/signout', to: 'sessions#destroy',     via: 'delete'
   match '/about',   to: 'static_pages#about',   via: 'get'
   match '/users',	to: 'users#index',			via: 'get'
+  match '/import',	to: 'questions#import',		via: 'get'
+  match '/load_csv', to: 'questions#load_csv',	via: 'post'
+  match '/download', to: 'questions#download', via: 'get'
   
   
   
