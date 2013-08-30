@@ -15,6 +15,7 @@ class Question < ActiveRecord::Base
     # write the file
     File.open(path, "wb") { |f| f.write(upload.read) }
     self.read_questions(path)
+    self.drop_file(path)
   end
   
   def self.read_questions(path)
@@ -25,7 +26,12 @@ class Question < ActiveRecord::Base
     rows.each do |row|
       hash = Hash[header.zip(row)]
       insert_data(hash)
+      
     end
+  end
+  
+  def self.drop_file(path)
+    File.delete(path)
   end
   
   def self.insert_data(hash)
