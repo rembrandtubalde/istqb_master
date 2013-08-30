@@ -12,7 +12,7 @@ IstqbMaster::Application.routes.draw do
   match '/users',	to: 'users#index',			via: 'get'
   match '/import',	to: 'questions#import',		via: 'get'
   match '/load_csv', to: 'questions#load_csv',	via: 'post'
-  match '/download', to: 'questions#download', via: 'get'
+  match '/download', to: 'questions#download', 	via: 'get'
   
   
   

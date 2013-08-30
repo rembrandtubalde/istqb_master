@@ -1,0 +1,34 @@
+<% provide(:title, "Edit question #{@question.id}") %>
+<h1>Update question <%= @question.id %></h1>
+
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for(@question) do |f| %>
+	  <%= render 'shared/error_messages', object: f.object %>
+      <%= f.label "Question body:" %>
+      <%= f.text_area :question, rows: 20 %>
+
+      <%=f.label "Answer option 1:" %>
+      <%= f.text_area :option_one, rows: 1 %>
+         
+      <%=f.label "Answer option 2:" %>
+      <%= f.text_area :option_two, rows: 1 %>
+      
+      <%=f.label "Answer option 3 (optional):" %>
+      <%= f.text_area :option_three, rows: 1 %>
+      
+      <%=f.label "Answer option 4 (optional):" %>
+      <%= f.text_area :option_four, rows: 1 %>
+      
+      <%=f.label "Correct answer:" %>
+      <%= f.select :correct_answer, [1, 2, 3, 4]  %>
+      
+      <%= f.label :certificate_type, "Type of ISTQB certification you are getting ready for" %>
+      <%= f.select :certificate_type, ["CTFL"], {}, {:disabled=>true} %>
+
+      <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
+    <% end %>
+    
+
+  </div>
+</div>

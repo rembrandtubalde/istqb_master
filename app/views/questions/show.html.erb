@@ -1,0 +1,31 @@
+<% provide(:title, "Question #{@question.id}") %>
+<div class="question_card">
+  <h3>Question <%= @question.id %> / <%= Question.count %> </h3>
+  <div class="question"><pre><%= @question.question %></pre></div>
+  <div class="answer_options">
+	  <div>1) <%= @question.option_one %></div>
+	  <div>2) <%= @question.option_two %></div>
+	  <% if !@question.option_three.nil? %>
+	    <div>3) <%= @question.option_three %></div>
+	  <% end %>
+	  <% if !@question.option_four.nil? %>
+	    <div>4) <%= @question.option_four %></div>
+	  <% end %>
+	  
+  </div>
+  <div class="correct">
+	Correct option: <%= @question.correct_answer %>)
+  </div>
+  
+  <div class="admin_links">
+	<% if current_user.is_superuser? %>
+	  <table>
+		  <tr>
+			  <td width=100><%= button_to 'Edit', edit_question_path(@question), class: "btn btn-medium btn-secondary btn-adm", method: :get %></td>
+		      <td width=100><%= button_to 'Delete', @question, class: "btn btn-medium btn-secondary btn-adm-del", method: :delete, data: { confirm: "This will permanently delete the question from the database. Are you sure?"} %> </td>
+		  </tr>
+	  </table>      
+	  
+	<% end %> 
+  </div>
+</div>

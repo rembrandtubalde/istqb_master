@@ -2,7 +2,7 @@
 <% @current_question = load_question%>
 <div class="question_card">
 <h3>Question <%=current_question.id %> / <%= Question.count %> </h3>
-<div class="question"><%= current_question.question %></div>
+<div class="question"><pre><%= current_question.question %></pre></div>
 
 <div class="answer_options">
 <%= form_for(@attempt) do |f| %>
@@ -40,7 +40,7 @@
 		</div>
     <% end %>
 
-  <%= f.submit "Submit answer >>>", class: "btn btn-medium btn-primary", id: "submit_button", disabled: true %>
+  <%= f.submit "Submit answer >>>", class: "btn btn-medium btn-primary btn-attempt", id: "submit_button", disabled: true %>
 
 <% end %>
 </div>
