@@ -9,7 +9,7 @@ class Question < ActiveRecord::Base
   
   def self.save_file(upload)
     name =  upload.original_filename
-    directory = "public/data"
+    directory = "tmp/"
     # create the file path
     path = File.join(directory, name)
     # write the file
