@@ -1,9 +1,6 @@
 class AttemptsController < ApplicationController
   include StaticPagesHelper
   before_action :signed_in_user
-  
-  before_action :correct_user
-
 
   def create
     @attempt = current_user.attempts.build(attempt_params)
