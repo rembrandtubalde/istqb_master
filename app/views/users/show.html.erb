@@ -10,6 +10,9 @@
 		<h2>
 			<div>Certification type: <%= "Foundation Level" if @user.certificate_type == "CTFL" %></div>
 			<div><%= "You can edit test library" if @user.is_superuser%></div>
+			
+			
+		
 		</h2>
     </section>
   </aside>
@@ -27,6 +30,12 @@
         <%= render @attempts %>
       </table>
       <%= will_paginate @attempts %>
+      
+      <br>
+      
+      <% if @user == current_user && @user.attempts.count > 0 %>
+			  <div><%= button_to "Begin the world anew (this will clear your history)", clear_history_users_path, class: "btn btn-medium btn-secondary", method: :get %></div>
+	  <% end %>
     <% end %>
 
   </div>

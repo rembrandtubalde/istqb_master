@@ -40,9 +40,14 @@
 		</div>
     <% end %>
 
-  <%= f.submit "Submit answer >>>", class: "btn btn-medium btn-primary btn-attempt", id: "submit_button", disabled: true %>
 
+  <%= f.submit "Submit answer >>>", class: "btn btn-medium btn-primary btn-attempt", id: "submit_button", disabled: true %>
 <% end %>
+
+  <% if current_user.is_superuser? %>
+     <%= button_to "Edit this question", edit_question_path(@current_question), class: "btn btn-medium btn-secondary", id: "adm-edit", method: :get  %>
+  <% end %>
+
 </div>
 </div>
 

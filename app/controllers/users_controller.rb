@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 	
 	before_action :signed_in_user,	only: [:index, :edit, :update, :destroy]
-	before_action :correct_user,	only: [:edit, :update, :destroy_attempts]
+	before_action :correct_user,	only: [:edit, :update]
 	
 	def new
 	  @user = User.new
@@ -44,7 +44,13 @@ class UsersController < ApplicationController
 		else
 		  render 'new'
 		end
-	  end
+	end
+	
+	def clear_history
+	   @user = current_user
+	   @user.attempts.delete_all
+	   redirect_to @user
+	end
 	  
 
 	  private

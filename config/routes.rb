@@ -1,5 +1,9 @@
 IstqbMaster::Application.routes.draw do
-  resources :users
+  resources :users do
+    collection do
+      get 'clear_history'
+    end
+  end
   resources :sessions, only: [:new, :create, :destroy]
   resources :attempts, only: [:create]
   resources :questions

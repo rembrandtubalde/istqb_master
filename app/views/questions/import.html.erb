@@ -37,6 +37,6 @@
 
 
 <%= form_tag load_csv_path, multipart: true do %>
-  <%= file_field_tag :file %>
-  <%= submit_tag "Import" %>
+  <div>  <%= file_field_tag :file %> </div>
+  <div> <%= submit_tag "Import", class: "btn btn-medium btn-primary" %>  </div>
 <% end %>
