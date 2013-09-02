@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 	
 	before_action :signed_in_user,	only: [:index, :edit, :update, :destroy]
-	before_action :correct_user,	only: [:edit, :update]
+	before_action :correct_user,	only: [:edit, :update, :destroy_attempts]
 	
 	def new
 	  @user = User.new
@@ -46,7 +46,6 @@ class UsersController < ApplicationController
 		end
 	  end
 	  
-
 
 	  private
 

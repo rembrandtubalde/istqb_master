@@ -8,7 +8,7 @@ class QuestionsController < ApplicationController
   end
   
   
-  before_action :admin_user
+  before_action :admin_user, only: [:edit, :update, :destroy, :import, :load_csv, :download]
   
   def destroy
       Question.find(params[:id]).destroy

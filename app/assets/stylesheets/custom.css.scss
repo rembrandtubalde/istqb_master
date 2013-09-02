@@ -18,7 +18,7 @@ html {
 }
 
 body {
-  padding-top: 60px;
+  padding-top: 90px;
 }
 
 section {
@@ -70,6 +70,10 @@ pre {
   
  }
 
+.super-logo {
+  padding-bottom: 50px;
+}
+
 /* header */
 
 #logo {
@@ -79,13 +83,16 @@ pre {
   color: white;
   text-transform: uppercase;
   letter-spacing: -1px;
-  padding-top: 9px;
   font-weight: bold;
   line-height: 1;
   &:hover {
     color: white;
     text-decoration: none;
   }
+}
+
+.pull-right {
+  padding-top: 7px;
 }
 
 /* footer */

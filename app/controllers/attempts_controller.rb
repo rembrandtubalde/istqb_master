@@ -1,6 +1,8 @@
 class AttemptsController < ApplicationController
   include StaticPagesHelper
   before_action :signed_in_user
+  
+  before_action :correct_user
 
 
   def create
@@ -19,7 +21,7 @@ class AttemptsController < ApplicationController
     end
   end
   
-  
+
   
   private
 

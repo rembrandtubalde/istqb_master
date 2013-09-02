@@ -1,20 +1,26 @@
 <% if signed_in? %>
-  <div class="row">
-    <aside class="span4">
-      <section>
-        <%= render 'shared/user_info' %>
-      </section>
+  <% if Question.count > 0 %>
+	  <div class="row">
+		<aside class="span4">
+		  <section>
+			<%= render 'shared/user_info' %>
+		  </section>
 
-    </aside>
-  </div>
+		</aside>
+	  </div>
   
         <%= render 'shared/attempt_form' %>
-  
+  <% else %>
+      <div class="center hero-unit">
+		<h1> Maaaan, something is terribly wrong here! </h1>
+		<p> It looks like the questions DB is empty. Which is bad. This means that you cannot do your training. Which is also bad. Not cool, man, not cool...</p>
+	  </div>
+  <% end %>
 <% else %>
 	<div class="center hero-unit">
 		<% provide(:title, 'Home') %>
 
-		<h1>ISTQB Master</h1>
+		<%= image_tag("Master_transparent_fwb_lr_text.svg", size: "480", class: "super-logo") %>
 		<p>Please login or create new account to start getting ready for your <%= link_to "ISTQB CT FL certification", "http://www.istqb.org/certification-path-root/foundation-level/foundation-level-in-a-nutshell.html" %></p>
 
 		<%= link_to "Sign up now!", signup_path, class: "btn btn-large btn-primary" %>
