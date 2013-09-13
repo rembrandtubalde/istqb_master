@@ -13,7 +13,7 @@ class QuestionsController < ApplicationController
   def destroy
       Question.find(params[:id]).destroy
       flash[:success] = "Question deleted."
-      redirect_to users_url
+      redirect_to (current_user)
   end
   
   def edit

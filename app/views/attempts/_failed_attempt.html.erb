@@ -1,0 +1,13 @@
+<tr>
+  <% question = Question.find_by_id(attempt.question_id) %>
+  <% if attempt.answer != attempt.correct_answer %>
+      <td align="right" style="padding-right: 15px" bgcolor="#ff9999">
+        <% if !question.nil? %>
+            <%= link_to(attempt.question_id, question) %>
+        <% else %>
+            <%= attempt.question_id %> (deleted)
+        <% end %>
+      </td>
+   <% end %>
+  <td align="left" style="padding-left: 15px"><%= time_ago_in_words(attempt.created_at) %> ago</td>
+</tr>

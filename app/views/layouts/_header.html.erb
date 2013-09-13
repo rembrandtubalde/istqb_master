@@ -1,13 +1,15 @@
 	  <header class="navbar navbar-fixed-top navbar">
 		<div class="navbar-inner">
 		  <div class="container">
-			<span id="logo"> <%= image_tag("Master_transparent_fwb_lr_text.svg", size: "96", valign: "top")  %>  </span>
+			<span id="logo"> <%= link_to image_tag("Master_transparent_fwb_lr_text.svg", size: "96", valign: "top"), root_path  %>  </span>
 			<nav>
 			  <ul class="nav pull-right">
 				<li><%= link_to "Home",    root_path %></li>
 				<li><%= link_to "About",    about_path %></li>
-				<% if signed_in? %>
-				  <li><%= link_to "Users",	users_path %></li>
+                <% if signed_in? %>
+                  <% if  current_user.is_superuser?%>
+                        <li><%= link_to "Users",	users_path %></li>
+                  <% end %>
 				  <li id="fat-menu" class="dropdown">
 				  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
 					Account <b class="caret"></b>

@@ -17,26 +17,54 @@
     </section>
   </aside>
   <div class="span8">
-    <% if @user.attempts.any? %>
-      <h3>
-		<div>Just look at those marvelous results<%= " of yours" if @user == current_user %>!</div> 
-	  </h3>
-	  <div class="sub_header"><%= @user.attempts.count %> test(s) taken: <%= passed_tests(@user, true) %> passed, <%= passed_tests(@user, false) %> failed</div>
-      <table>
-        <tr>
-		  <th width="110px"><div style="border: border-left: 1px">Question ID</div></th>
-		  <th>Time taken</th>
-		</tr>
-        <%= render @attempts %>
-      </table>
-      <%= will_paginate @attempts %>
-      
-      <br>
-      
-      <% if @user == current_user && @user.attempts.count > 0 %>
-			  <div><%= button_to "Begin the world anew (this will clear your history)", clear_history_users_path, class: "btn btn-medium btn-secondary", method: :get %></div>
-	  <% end %>
-    <% end %>
+    <div id="tabs">
+      <ul>
+        <li><a href="#full-hist">Full History</a></li>
+        <li><a href="#only-failed">Failed attempts</a></li>
+      </ul>
+        <div id="full-hist">
+        <% if @user.attempts.any? %>
+          <h3>
+            <div>Just look at those marvelous results<%= " of yours" if @user == current_user %>!</div>
+          </h3>
+          <div class="sub_header"><%= @user.attempts.count %> test(s) taken: <%= passed_tests(@user, true) %> passed, <%= passed_tests(@user, false) %> failed</div>
+          <table>
+            <tr>
+              <th width="110px"><div style="border: border-left: 1px">Question ID</div></th>
+              <th>Time taken</th>
+            </tr>
+            <%= render @attempts %>
+          </table>
+          <%= will_paginate @attempts %>
 
+          <br>
+
+          <% if @user == current_user && @user.attempts.count > 0 %>
+                  <div><%= button_to "Begin the world anew (this will clear your history)", clear_history_users_path, class: "btn btn-medium btn-secondary", method: :get %></div>
+          <% end %>
+        <% end %>
+        </div>
+        <div id="only-failed">
+          <% if @user.attempts.any? %>
+              <h3>
+                <div>Not the brightest moments, huh?</div>
+              </h3>
+              <table>
+                <tr>
+                  <th width="110px"><div style="border: border-left: 1px">Question ID</div></th>
+                  <th>Time taken</th>
+                </tr>
+                <%= render @failed_attempts %>
+              </table>
+              <%= will_paginate @failed_attempts %>
+
+              <br>
+
+              <% if @user == current_user && @user.attempts.count > 0 %>
+                  <div><%= button_to "Begin the world anew (this will clear your history)", clear_history_users_path, class: "btn btn-medium btn-secondary", method: :get %></div>
+              <% end %>
+          <% end %>
+        </div>
+    </div>
   </div>
 </div>

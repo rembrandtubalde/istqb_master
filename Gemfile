@@ -11,6 +11,7 @@ gem 'will_paginate', '3.0.4'
 gem 'bootstrap-will_paginate', '0.0.9'
 gem 'roo'
 gem 'fastercsv'
+gem 'jquery-ui-rails'
 
 group :development, :test do
   gem 'rspec-rails', '2.13.1'
