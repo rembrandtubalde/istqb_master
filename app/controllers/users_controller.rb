@@ -26,7 +26,9 @@ class UsersController < ApplicationController
           next if x.answer == x.correct_answer
           x
       end.compact!
-      @failed_attempts = @fa.paginate(page: params[:page], per_page: 25)
+      if !@fa.nil?
+        @failed_attempts = @fa.paginate(page: params[:page], per_page: 25)
+      end
     end
     #@failed_attempts = @fa.paginate(page: params[:page], per_page: 25)
   end
