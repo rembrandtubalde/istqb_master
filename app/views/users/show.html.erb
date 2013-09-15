@@ -16,6 +16,7 @@
 		</h2>
     </section>
   </aside>
+  <% if @user.attempts.any? %>
   <div class="span8">
     <div id="tabs">
       <ul>
@@ -42,10 +43,15 @@
           <% if @user == current_user && @user.attempts.count > 0 %>
                   <div><%= button_to "Begin the world anew (this will clear your history)", clear_history_users_path, class: "btn btn-medium btn-secondary", method: :get %></div>
           <% end %>
-        <% end %>
+
+         <% else %>
+              <h3>
+                <div>Why don't you go and pass some tests?</div>
+              </h3>
+         <% end %>
         </div>
         <div id="only-failed">
-          <% if @user.attempts.any? %>
+          <% if !@user.attempts.empty? && !@fa.empty? && !@fa.nil? %>
               <h3>
                 <div>Not the brightest moments, huh?</div>
               </h3>
@@ -63,8 +69,16 @@
               <% if @user == current_user && @user.attempts.count > 0 %>
                   <div><%= button_to "Begin the world anew (this will clear your history)", clear_history_users_path, class: "btn btn-medium btn-secondary", method: :get %></div>
               <% end %>
+          <% else %>
+              <h3>
+                <div>Why don't you go and pass some tests?</div>
+              </h3>
           <% end %>
         </div>
     </div>
   </div>
+  <% else %>
+      <h2><%= link_to "Why don't you pass some tests, friend?",    root_path %>     </h2>
+
+  <% end %>
 </div>

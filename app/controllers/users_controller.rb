@@ -21,11 +21,14 @@ class UsersController < ApplicationController
 	def show
 	  @user = User.find(params[:id])
 	  @attempts = @user.attempts.paginate(page: params[:page], :per_page => 25)
-    fa =  @user.attempts.collect do |x|
-        next if x.answer == x.correct_answer
-        x
-    end.compact!
-    @failed_attempts = fa.paginate(page: params[:page], per_page: 25)
+    if !@user.attempts.empty?
+      @fa =  @user.attempts.collect do |x|
+          next if x.answer == x.correct_answer
+          x
+      end.compact!
+      @failed_attempts = @fa.paginate(page: params[:page], per_page: 25)
+    end
+    #@failed_attempts = @fa.paginate(page: params[:page], per_page: 25)
   end
 	  
 	def edit
